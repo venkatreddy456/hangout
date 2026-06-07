@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hangoutpod
+  labels:
+    appName: hangout
+    appVersion: "1.0"
+    env: production
+  annotations:
+    license: Apache GNU Public License2
+    description: Hangout application provides travel guide  
+spec:
+  containers:
+    - name: hangout
+      image: hangout:1.0
+      ports:
+        - name: hangoutport
+          containerPort: 8080
+          protocol: TCP
+      readinessProbe:
+        httpGet:
+          path: /hangout/actuator/health/readiness
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 10
+        failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /hangout/actuator/health/liveness
+          port: 8080
+        initialDelaySeconds: 5
+        timeoutSeconds: 10
+        failureThreshold: 3
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "512Mi"
+        limits:
+          cpu: "1000m"
+          memory: "1024Mi"
