@@ -12,7 +12,7 @@ metadata:
 spec:
   containers:
     - name: hangout
-      image:venkatreddy3456/hangout:1.0
+      image: venkatreddy3456/hangout:1.0
       ports:
         - name: hangoutport
           containerPort: 8080
